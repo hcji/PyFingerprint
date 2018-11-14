@@ -9,7 +9,7 @@ import numpy as np
 from jpype import isJVMStarted, startJVM, getDefaultJVMPath, JPackage
 
 if not isJVMStarted():
-    cdk_path = 'CDK/cdk-2.0.jar'
+    cdk_path = 'CDK/cdk-2.2.jar'
     startJVM(getDefaultJVMPath(), "-ea", "-Djava.class.path=%s" % cdk_path)
     cdk = JPackage('org').openscience.cdk
     
@@ -69,5 +69,6 @@ def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6):
 
 if __name__ == '__main__':
     smi = 'CC(N)CCCN'
+    fp = cdk_fingerprint(smi, fp_type="daylight")
     fp = cdk_fingerprint(smi, fp_type="pubchem")
     
