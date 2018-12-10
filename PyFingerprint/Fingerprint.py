@@ -5,9 +5,9 @@ Created on Mon Dec 10 10:11:11 2018
 @author: hcji
 """
 
-from CDK_Fingerprint import cdk_fingerprint
-from RDK_Fingerprint import rdk_fingerprint
-from Babel_Fingerprint import ob_fingerprint
+from PyFingerprint.CDK_Fingerprint import cdk_fingerprint
+from PyFingerprint.RDK_Fingerprint import rdk_fingerprint
+from PyFingerprint.Babel_Fingerprint import ob_fingerprint
 
 
 def get_fingerprint(smi, fp_type, nbit=None, depth=None):
