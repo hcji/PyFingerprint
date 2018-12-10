@@ -22,7 +22,7 @@ There are many types of chemical fingerprint for describing the molecule provide
  ### Install
  1. Clone this repo:
  
-	git clone https://github.com/duolinwang/CapsNet_PTM
+	git clone https://github.com/hcji/PyFingerprint.git
  2. install the package locally
  
 	python setup.py install
