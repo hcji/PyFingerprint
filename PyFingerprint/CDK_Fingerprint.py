@@ -63,12 +63,8 @@ def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6):
         idx = fp.nextSetBit(idx + 1)
     vec = np.zeros(nbit)
     vec[bits] = 1
+    vec = vec.astype(int)
     
     return vec
 
-
-if __name__ == '__main__':
-    smi = 'CC(N)CCCN'
-    fp = cdk_fingerprint(smi, fp_type="daylight")
-    fp = cdk_fingerprint(smi, fp_type="pubchem")
     
