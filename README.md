@@ -9,23 +9,23 @@ There are many types of chemical fingerprint for describing the molecule provide
  2. Java Runtime Environment 8.0
  3. jpype
  
-		pip install jpype
+        pip install jpype
 
  4. RDKit
 
-	    conda install libboost=1.65.1
-	    conda install boost=1.65.1
-	    conda install boost-cpp=1.65.1
-	    conda install -c rdkit rdkit
+        conda install libboost=1.65.1
+        conda install boost=1.65.1
+        conda install boost-cpp=1.65.1
+        conda install -c rdkit rdkit
  5. [Pybel](https://open-babel.readthedocs.io/en/latest/UseTheLibrary/PythonInstall.html)
  
  ### Install
  1. Clone this repo:
  
-	git clone https://github.com/hcji/PyFingerprint.git
+        git clone https://github.com/hcji/PyFingerprint.git
  2. install the package locally
  
-	python setup.py install
+        python setup.py install
 
 ### Usage
 
