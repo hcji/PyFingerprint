@@ -17,7 +17,7 @@ There are many types of chemical fingerprint for describing the molecule provide
         conda install boost=1.65.1
         conda install boost-cpp=1.65.1
         conda install -c rdkit rdkit
- 5. [Pybel](https://open-babel.readthedocs.io/en/latest/UseTheLibrary/PythonInstall.html)
+ 5. [Pybel](https://open-babel.readthedocs.io/en/latest/UseTheLibrary/PythonInstall.html) (Optional, only for OpenBabel fingerprints)
  
  ### Install
  1. Clone this repo:
