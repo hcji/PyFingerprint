@@ -17,7 +17,7 @@ There are many types of chemical fingerprint for describing the molecule provide
         conda install boost=1.65.1
         conda install boost-cpp=1.65.1
         conda install -c rdkit rdkit
- 5. [Pybel](https://open-babel.readthedocs.io/en/latest/UseTheLibrary/PythonInstall.html)
+ 5. [Pybel](https://open-babel.readthedocs.io/en/latest/UseTheLibrary/PythonInstall.html) (Optional, only for OpenBabel fingerprints)
  
  ### Install
  1. Clone this repo:
@@ -33,6 +33,7 @@ There are many types of chemical fingerprint for describing the molecule provide
 	fps = get_fingerprint('CCCCN', fp_type='daylight')
 
 ### Support fingerprint types:
+
 	**daylight**: Considers paths of a given length. These are hashed fingerprints, with a default length of 1024.
 	**extended**: Similar to the standard type, but takes rings and atomic properties into account into account.
 	**graph**: Similar to the standard type by simply considers connectivity.
@@ -53,6 +54,5 @@ There are many types of chemical fingerprint for describing the molecule provide
 	**FP2**: OpenBabel FP2 fingerprint, which indexes small molecule fragments based on linear segments of up to 7 atoms in length.
 	**FP3**: OpenBabel FP3 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
 	**FP4**: OpenBabel FP4 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
-	
 	
 
