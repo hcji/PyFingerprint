@@ -29,7 +29,7 @@ There are many types of chemical fingerprint for describing the molecule provide
 
 ### Usage
 
-	from PyFingerprint.Fingerprint import get_fingerprint
+	from PyFingerprint.All_Fingerprint import get_fingerprint
 	fps = get_fingerprint('CCCCN', fp_type='daylight')
 
 ### Support fingerprint types:
@@ -49,6 +49,7 @@ There are many types of chemical fingerprint for describing the molecule provide
 	**Avalon**: Substructure or similarity Avalon fingerprint.
 	**AtomPair**: RDKit Atom-Pair fingerprint.
 	**TopologicalTorsion**: RDKit Topological-Torsion Fingerprint.
+	**Morgan**: RDKit Morgan fingerprint.
 	**FP2**: OpenBabel FP2 fingerprint, which indexes small molecule fragments based on linear segments of up to 7 atoms in length.
 	**FP3**: OpenBabel FP3 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
 	**FP4**: OpenBabel FP4 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
