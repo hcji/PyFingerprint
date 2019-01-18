@@ -10,19 +10,19 @@ from PyFingerprint.RDK_Fingerprint import rdk_fingerprint
 from PyFingerprint.Babel_Fingerprint import ob_fingerprint
 
 
-def get_fingerprint(smi, fp_type, nbit=None, depth=None):
+def get_fingerprint(smi, fp_type, nbit=None, depth=None, output='bit'):
     if fp_type in ["daylight", "extended", "graph", "pubchem", "estate", "hybridization", "lingo", "klekota-roth", "shortestpath", "signature", "circular"]:
         if nbit is None:
             nbit = 1024
         if depth is None:
             depth = 6
-        res = cdk_fingerprint(smi, fp_type, nbit, depth)
+        res = cdk_fingerprint(smi, fp_type, nbit, depth, output)
     elif fp_type in ["rdkit", "maccs", "AtomPair", "TopologicalTorsion", "Avalon"]:
-        res = rdk_fingerprint(smi, fp_type)
+        res = rdk_fingerprint(smi, fp_type, nbit, output)
     elif fp_type in ["FP2", "FP3", "FP4"]:
         if nbit is None:
             nbit = 307
-        res = ob_fingerprint(smi, fp_type, nbit)
+        res = ob_fingerprint(smi, fp_type, nbit, output)
     else:
         raise IOError('invalid fingerprint type')
     return res

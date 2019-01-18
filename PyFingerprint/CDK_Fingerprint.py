@@ -25,7 +25,7 @@ def cdk_parser_smiles(smi):
     return mol
 
 
-def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6):
+def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6, output='bit'):
     if fp_type == 'maccs':
         nbit = 166
     elif fp_type == 'estate':
@@ -63,10 +63,12 @@ def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6):
     while idx >= 0:
         bits.append(idx)
         idx = fp.nextSetBit(idx + 1)
-    vec = np.zeros(nbit)
-    vec[bits] = 1
-    vec = vec.astype(int)
-    
-    return vec
+    if output == 'bit':
+        return bits
+    else:  
+        vec = np.zeros(nbit)
+        vec[bits] = 1
+        vec = vec.astype(int)
+        return vec
 
     
