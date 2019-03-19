@@ -9,7 +9,7 @@ There are many types of chemical fingerprint for describing the molecule provide
  2. Java Runtime Environment 8.0
  3. jpype
  
-        pip install jpype
+        pip install jpype1
 
  4. RDKit
 
@@ -19,13 +19,9 @@ There are many types of chemical fingerprint for describing the molecule provide
         conda install -c rdkit rdkit
  5. [Pybel](https://open-babel.readthedocs.io/en/latest/UseTheLibrary/PythonInstall.html) (Optional, only for OpenBabel fingerprints)
  
- ### Install
- 1. Clone this repo:
- 
-        git clone https://github.com/hcji/PyFingerprint.git
- 2. install the package locally
- 
-        python setup.py install
+### Install
+
+	pip install git+git://github.com/hcji/PyFingerprint@master
 
 ### Usage
 
