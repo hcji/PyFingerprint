@@ -8,7 +8,10 @@ Created on Mon Dec 10 10:11:11 2018
 import numpy as np
 from PyFingerprint.CDK_Fingerprint import cdk_fingerprint
 from PyFingerprint.RDK_Fingerprint import rdk_fingerprint
-from PyFingerprint.Babel_Fingerprint import ob_fingerprint
+try:
+    from PyFingerprint.Babel_Fingerprint import ob_fingerprint
+except:
+    print('Cannot import pybal, openbabel fingerprint cannot be used')
 
 
 def get_fingerprint(smi, fp_type, nbit=None, depth=None, output='bit'):
