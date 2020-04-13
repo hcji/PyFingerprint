@@ -13,9 +13,6 @@ There are many types of chemical fingerprint for describing the molecule provide
 
  4. RDKit
 
-        conda install libboost=1.65.1
-        conda install boost=1.65.1
-        conda install boost-cpp=1.65.1
         conda install -c rdkit rdkit
  5. [Pybel](https://open-babel.readthedocs.io/en/latest/UseTheLibrary/PythonInstall.html) (Optional, only for OpenBabel fingerprints)
  
@@ -27,6 +24,21 @@ There are many types of chemical fingerprint for describing the molecule provide
 
 	from PyFingerprint.All_Fingerprint import get_fingerprint
 	fps = get_fingerprint('CCCCN', fp_type='daylight')
+	
+### Cite
+
+	@article {Ji2020.03.30.017137,
+	author = {Ji, Hongchao and Lu, Hongmei and Zhang, Zhimin},
+	title = {Predicting Molecular Fingerprint from Electron-Ionization Mass Spectrum with Deep Neural Networks},
+	elocation-id = {2020.03.30.017137},
+	year = {2020},
+	doi = {10.1101/2020.03.30.017137},
+	publisher = {Cold Spring Harbor Laboratory},
+	abstract = {Electron-ionization mass spectrometry (EI-MS) hyphenated gas chromatography (GC) is the workhorse to analyze volatile compounds in complex samples. The spectral matching method can only identify compounds within spectral database. In response, we present a deep-learning-based approach (DeepEI) for structure elucidation of unknown compound with its EI-MS spectrum. DeepEI employs deep neural networks to predict molecular fingerprint from EI-MS spectrum, and searches molecular structure database with the predicted fingerprints. In addition, a convolutional neural network was also trained to filter the structures in database and improve the identification performance. Our method shows improvement on the competing method NEIMS in identification accuracy on both NIST test dataset and MassBank dataset. Furthermore, DeepEI (spectrum to fingerprint) and NEIMS (fingerprint to spectrum) can be combined to improve identification accuracy.},
+	URL = {https://www.biorxiv.org/content/early/2020/04/01/2020.03.30.017137},
+	eprint = {https://www.biorxiv.org/content/early/2020/04/01/2020.03.30.017137.full.pdf},
+	journal = {bioRxiv}
+	}
 
 ### Support fingerprint types:
 
