@@ -11,7 +11,7 @@ from jpype import isJVMStarted, startJVM, getDefaultJVMPath, JPackage
 import PyFingerprint
 
 if not isJVMStarted():
-    cdk_path = os.path.join(PyFingerprint.__path__[0] + 'CDK', 'cdk-2.2.jar')
+    cdk_path = os.path.join(PyFingerprint.__path__[0], 'CDK', 'cdk-2.2.jar')
     startJVM(getDefaultJVMPath(), "-ea", "-Djava.class.path=%s" % cdk_path)
     cdk = JPackage('org').openscience.cdk
     
