@@ -15,6 +15,7 @@ from rdkit.Avalon import pyAvalonTools
 
 def rdk_fingerprint(smi, fp_type="rdkit", size=1024, output="bit"):
     _fingerprinters = {"rdkit": Chem.rdmolops.RDKFingerprint
+                           , "Morgan": GetMorganFingerprintAsBitVect
                            , "maccs": MACCSkeys.GenMACCSKeys
                            , "TopologicalTorsion": Torsions.GetTopologicalTorsionFingerprint
                            , "Avalon": pyAvalonTools.GetAvalonFP}
