@@ -5,7 +5,7 @@ There are many types of chemical fingerprint for describing the molecule provide
 
 ### Dependencies
 
- 1. Anaconda for python 3.6
+ 1. Anaconda for python 3.6 or later
  2. Java Runtime Environment 8.0
  3. jpype
  
