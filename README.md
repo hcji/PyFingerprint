@@ -14,7 +14,10 @@ There are many types of chemical fingerprint for describing the molecule provide
  4. RDKit
 
         conda install -c rdkit rdkit
- 5. [Pybel](https://open-babel.readthedocs.io/en/latest/UseTheLibrary/PythonInstall.html) (Optional, only for OpenBabel fingerprints)
+		
+ 5. OpenBabel
+ 
+		conda install -c conda-forge openbabel
  
 ### Install
 

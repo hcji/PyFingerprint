@@ -5,7 +5,7 @@ Created on Thu Nov 15 10:49:26 2018
 @author: hcji
 """
 
-import pybel
+from openbabel import pybel
 import numpy as np
 
 def ob_fingerprint(smi, fp_type='FP2', nbit=307, output='bit'):
