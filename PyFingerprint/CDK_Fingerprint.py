@@ -30,6 +30,8 @@ def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6, output='bit'):
         nbit = 166
     elif fp_type == 'estate':
         nbit = 79
+    elif fp_type == 'cdk':
+        nbit = 307
     elif fp_type == 'pubchem':
         nbit = 881
     elif fp_type == 'klekota-roth':
@@ -49,6 +51,7 @@ def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6, output='bit'):
                             , "shortestpath":cdk.fingerprint.ShortestPathFingerprinter(size)
                             , "signature": cdk.fingerprint.SignatureFingerprinter(depth)
                             , "circular": cdk.fingerprint.CircularFingerprinter()
+                            , "cdk": cdk.fingerprint.SubstructureFingerprinter()
                             }
     
     mol = cdk_parser_smiles(smi)

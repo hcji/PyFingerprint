@@ -15,7 +15,9 @@ except:
 
 
 def get_fingerprint(smi, fp_type, nbit=None, depth=None, output='bit'):
-    if fp_type in ["daylight", "extended", "graph", "pubchem", "estate", "hybridization", "lingo", "klekota-roth", "shortestpath", "signature", "circular", "Morgan"]:
+    if fp_type in ["daylight", "extended", "graph", "pubchem", "estate",
+                   "hybridization", "lingo", "klekota-roth", "shortestpath",
+                   "signature", "circular", "Morgan", "cdk"]:
         if nbit is None:
             nbit = 1024
         if depth is None:
