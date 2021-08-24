@@ -24,6 +24,7 @@ def cdk_parser_smiles(smi):
         raise IOError('invalid smiles input')
     return mol
 
+fp_map  = {}
 
 def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6, output='bit'):
     if fp_type == 'maccs':
@@ -57,7 +58,12 @@ def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6, output='bit'):
     
     mol = cdk_parser_smiles(smi)
     if fp_type in _fingerprinters:
-        fingerprinter = _fingerprinters[fp_type]()
+        if (fp_type, size, depth) in fp_map: 
+            fingerprinter = fp_map[(fp_type, size, depth)]
+        else:
+            fingerprinter = _fingerprinters[fp_type]()
+            fp_map[(fp_type, size, depth)] = fingerprinter
+
     else:
         raise IOError('invalid fingerprint type')
 
