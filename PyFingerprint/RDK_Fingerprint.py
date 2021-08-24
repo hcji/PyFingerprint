@@ -33,6 +33,6 @@ def rdk_fingerprint(smi, fp_type="rdkit", size=1024, output="bit"):
         temp = fp.GetOnBits()
         res = [i for i in temp]
     else:
-        res = np.array(fp)
+        res = np.array(fp, dtype=np.uint8)
     return res
     

@@ -16,8 +16,8 @@ if not isJVMStarted():
     cdk = JPackage('org').openscience.cdk
     
 
+sp = cdk.smiles.SmilesParser(cdk.DefaultChemObjectBuilder.getInstance())
 def cdk_parser_smiles(smi):
-    sp = cdk.smiles.SmilesParser(cdk.DefaultChemObjectBuilder.getInstance())
     try:
         mol = sp.parseSmiles(smi)
     except:
@@ -26,20 +26,7 @@ def cdk_parser_smiles(smi):
 
 fp_map  = {}
 
-def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6, output='bit'):
-    if fp_type == 'maccs':
-        nbit = 166
-    elif fp_type == 'estate':
-        nbit = 79
-    elif fp_type == 'cdk':
-        nbit = 307
-    elif fp_type == 'pubchem':
-        nbit = 881
-    elif fp_type == 'klekota-roth':
-        nbit = 4860
-    else:
-        nbit = size
-
+def get_fingerprinter(name, size, depth): 
     ### This was getting made every time!
     _fingerprinters = {"daylight":lambda : cdk.fingerprint.Fingerprinter(size, depth)
                        , "extended":lambda : cdk.fingerprint.ExtendedFingerprinter(size, depth)
@@ -55,17 +42,33 @@ def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6, output='bit'):
                        , "circular": lambda : cdk.fingerprint.CircularFingerprinter()
                        , "cdk": lambda : cdk.fingerprint.SubstructureFingerprinter()
                             }
-    
-    mol = cdk_parser_smiles(smi)
-    if fp_type in _fingerprinters:
-        if (fp_type, size, depth) in fp_map: 
-            fingerprinter = fp_map[(fp_type, size, depth)]
-        else:
-            fingerprinter = _fingerprinters[fp_type]()
-            fp_map[(fp_type, size, depth)] = fingerprinter
-
-    else:
+    if name not in _fingerprinters: 
         raise IOError('invalid fingerprint type')
+
+    return _fingerprinters[name]()
+
+def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6, output='bit'):
+    if fp_type == 'maccs':
+        nbit = 166
+    elif fp_type == 'estate':
+        nbit = 79
+    elif fp_type == 'cdk':
+        nbit = 307
+    elif fp_type == 'pubchem':
+        nbit = 881
+    elif fp_type == 'klekota-roth':
+        nbit = 4860
+    else:
+        nbit = size
+
+    mol = cdk_parser_smiles(smi)
+
+    # Pull from cache if it exists
+    if (fp_type, size, depth) in fp_map: 
+        fingerprinter = fp_map[(fp_type, size, depth)]
+    else:
+        fingerprinter = get_fingerprinter(fp_type, size, depth)
+        fp_map[(fp_type, size, depth)] = fingerprinter
 
     if False:
         fp = fingerprinter.getBitFingerprint(mol).asBitSet()

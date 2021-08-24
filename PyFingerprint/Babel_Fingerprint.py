@@ -21,8 +21,7 @@ def ob_fingerprint(smi, fp_type='FP2', nbit=307, output='bit'):
     if output == 'bit':
         return bits
     else:
-        vec = np.zeros(nbit)
+        vec = np.zeros(nbit, dtype=np.uint8)
         vec[bits] = 1
-        vec = vec.astype(int)
         return vec
 
