@@ -70,27 +70,57 @@ def cdk_fingerprint(smi, fp_type="daylight", size=1024, depth=6, output='bit'):
         fingerprinter = get_fingerprinter(fp_type, size, depth)
         fp_map[(fp_type, size, depth)] = fingerprinter
 
-    if False:
-        fp = fingerprinter.getBitFingerprint(mol).asBitSet()
-        bits = []
-        idx = fp.nextSetBit(0)
-        while idx >= 0:
-            bits.append(idx)
-            idx = fp.nextSetBit(idx + 1)
-        if output == 'bit':
-            return bits
-        else:  
-            vec = np.zeros(nbit)
-            vec[bits] = 1
-            vec = vec.astype(int)
-            return vec
+    fp_obj = fingerprinter.getBitFingerprint(mol)
+    bits = np.array(fp_obj.getSetbits())
+    if output == 'bit':
+        return bits
+    else:  
+        vec = np.zeros(nbit, dtype=np.uint8)
+        vec[bits] = 1
+        return vec
 
-    else: 
+def cdk_fingerprints(smis, fp_type="daylight", size=1024, depth=6, output='bit'):
+    if fp_type == 'maccs':
+        nbit = 166
+    elif fp_type == 'estate':
+        nbit = 79
+    elif fp_type == 'cdk':
+        nbit = 307
+    elif fp_type == 'pubchem':
+        nbit = 881
+    elif fp_type == 'klekota-roth':
+        nbit = 4860
+    else:
+        nbit = size
+
+    _fingerprinters = {"daylight":lambda : cdk.fingerprint.Fingerprinter(size, depth)
+                       , "extended":lambda : cdk.fingerprint.ExtendedFingerprinter(size, depth)
+                       , "graph":lambda : cdk.fingerprint.GraphOnlyFingerprinter(size, depth)
+                       , "maccs":lambda : cdk.fingerprint.MACCSFingerprinter()
+                       , "pubchem":lambda : cdk.fingerprint.PubchemFingerprinter(cdk.silent.SilentChemObjectBuilder.getInstance())
+                       , "estate":lambda : cdk.fingerprint.EStateFingerprinter()
+                       , "hybridization":lambda : cdk.fingerprint.HybridizationFingerprinter(size, depth)
+                       , "lingo":lambda : cdk.fingerprint.LingoFingerprinter(depth)
+                       , "klekota-roth":lambda : cdk.fingerprint.KlekotaRothFingerprinter()
+                       , "shortestpath":lambda : cdk.fingerprint.ShortestPathFingerprinter(size)
+                       , "signature": lambda : cdk.fingerprint.SignatureFingerprinter(depth)
+                       , "circular": lambda : cdk.fingerprint.CircularFingerprinter()
+                       , "cdk": lambda : cdk.fingerprint.SubstructureFingerprinter()
+                            }
+    if fp_type not in _fingerprinters: 
+        raise IOError('invalid fingerprint type')
+
+    fingerprinter = _fingerprinters[fp_type]()
+
+    output_list = []
+    for smi in smis: 
+        mol = cdk_parser_smiles(smi)
         fp_obj = fingerprinter.getBitFingerprint(mol)
         bits = np.array(fp_obj.getSetbits())
         if output == 'bit':
-            return bits
+            output_list.append(bits)
         else:  
             vec = np.zeros(nbit, dtype=np.uint8)
             vec[bits] = 1
-            return vec
+            output_list.append(vec)
+    return output_list
