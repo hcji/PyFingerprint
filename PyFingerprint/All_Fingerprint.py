@@ -41,5 +41,3 @@ def get_multi_fingerprint(smi, fp_types, nbit=None, depth=None, output='bit'):
         return bits
     else:
         return vec
-
-    
