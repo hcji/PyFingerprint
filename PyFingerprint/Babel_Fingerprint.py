@@ -21,8 +21,28 @@ def ob_fingerprint(smi, fp_type='FP2', nbit=307, output='bit'):
     if output == 'bit':
         return bits
     else:
-        vec = np.zeros(nbit)
+        vec = np.zeros(nbit, dtype=np.uint8)
         vec[bits] = 1
-        vec = vec.astype(int)
         return vec
+
+def ob_fingerprints(smis, fp_type='FP2', nbit=307, output='bit'):
+    output_list = []
+    for smi in smis: 
+        mol = pybel.readstring("smi", smi)
+        if fp_type == 'FP2':
+            fp = mol.calcfp('FP2')
+        elif fp_type == 'FP3':
+            fp = mol.calcfp('FP3')
+        elif fp_type == 'FP4':
+            fp = mol.calcfp('FP4')
+        bits = fp.bits
+        bits = [x for x in bits if x < nbit]
+        if output == 'bit':
+            output_list.append(bits)
+
+        else:
+            vec = np.zeros(nbit, dtype=np.uint8)
+            vec[bits] = 1
+            output_list.append(vec)
+    return output_list
 
