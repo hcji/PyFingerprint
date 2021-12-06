@@ -9,8 +9,8 @@ There are many types of chemical fingerprint for describing the molecule provide
 
 ### Dependencies
 
- 1. Anaconda for python 3.6 or later
- 2. Java SE Development Kit 11
+ 1. [Anaconda for python 3.6 or later](https://www.anaconda.com/products/individual) 
+ 2. [Java SE Development Kit 11](https://www.oracle.com/java/technologies/java-se-development-kit11-downloads.html) 
  3. jpype
  
         pip install jpype1
