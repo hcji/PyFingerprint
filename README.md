@@ -21,7 +21,7 @@ There are many types of chemical fingerprint for describing the molecule provide
 		
  5. OpenBabel
  
-		conda install -c conda-forge openbabel
+		conda install -c conda-forge/label/main openbabel
  
 ### Install
 
@@ -29,8 +29,27 @@ There are many types of chemical fingerprint for describing the molecule provide
 
 ### Usage
 
-	from PyFingerprint.All_Fingerprint import get_fingerprint
-	fps = get_fingerprint('CCCCN', fp_type='daylight')
+    from PyFingerprint.fingerprint import get_fingerprint
+
+    smi = 'CCCCN'
+    cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybridization', 'lingo', 
+                'klekota-roth', 'shortestpath', 'signature', 'substructure']
+    rdktypes = ['rdkit', 'morgan', 'rdk-maccs', 'topological-torsion', 'avalon', 'atom-pair']
+    babeltypes = ['fp2', 'fp3', 'fp4']
+
+    output = {}
+    for f in cdktypes:
+        output[f] = get_fingerprint(smi, f)
+
+    for f in rdktypes:
+        output[f] = get_fingerprint(smi, f)
+        
+    for f in babeltypes:
+        output[f] = get_fingerprint(smi, f)
+
+    output_np = output.copy()
+    for k, fp in output.items():
+        output_np[k] = fp.to_numpy()
 	
 ### Cite
 
@@ -38,7 +57,7 @@ There are many types of chemical fingerprint for describing the molecule provide
 
 ### Support fingerprint types:
 
-	**daylight**: Considers paths of a given length. These are hashed fingerprints, with a default length of 1024.
+	**standard**: Considers paths of a given length. These are hashed fingerprints, with a default length of 1024.
 	**extended**: Similar to the standard type, but takes rings and atomic properties into account into account.
 	**graph**: Similar to the standard type by simply considers connectivity.
 	**hybridization**: Similar to the standard type, but only consider hybridization state.
@@ -51,12 +70,12 @@ There are many types of chemical fingerprint for describing the molecule provide
 	**lingo**: An implementation of the LINGO fingerprint.
 	**rdkit**: Another implementation of a Daylight-like fingerprint by RDKit.
 	**maccs**: The popular 166 bit MACCS keys described by MDL.
-	**Avalon**: Substructure or similarity Avalon fingerprint.
-	**AtomPair**: RDKit Atom-Pair fingerprint.
-	**TopologicalTorsion**: RDKit Topological-Torsion Fingerprint.
-	**Morgan**: RDKit Morgan fingerprint.
-	**FP2**: OpenBabel FP2 fingerprint, which indexes small molecule fragments based on linear segments of up to 7 atoms in length.
-	**FP3**: OpenBabel FP3 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
-	**FP4**: OpenBabel FP4 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
+	**avalon**: Substructure or similarity Avalon fingerprint.
+	**atom-pair**: RDKit Atom-Pair fingerprint.
+	**topological-torsion**: RDKit Topological-Torsion Fingerprint.
+	**morgan**: RDKit Morgan fingerprint.
+	**fp2**: OpenBabel FP2 fingerprint, which indexes small molecule fragments based on linear segments of up to 7 atoms in length.
+	**fp3**: OpenBabel FP3 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
+	**fp4**: OpenBabel FP4 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
 	
 
