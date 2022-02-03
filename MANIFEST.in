@@ -1,1 +1,2 @@
 include PyFingerprint/CDK/*
+include PyFingerprint/PyFingerprint/*
