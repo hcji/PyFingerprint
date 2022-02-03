@@ -9,18 +9,21 @@ Created on Wed Feb  2 08:01:30 2022
 import numpy as np
 from PyFingerprint.cdk import cdk_fingerprint
 from PyFingerprint.rdk import rdk_fingerprint 
-from PyFingerprint.babel import ob_fingerprint 
+from PyFingerprint.babel import ob_fingerprint
+from PyFingerprint.mol2vec import mol2vec_fingerprint
 
 cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybridization', 'lingo', 
             'klekota-roth', 'shortestpath', 'signature', 'substructure']
 rdktypes = ['rdkit', 'morgan', 'rdk-maccs', 'topological-torsion', 'avalon', 'atom-pair']
 babeltypes = ['fp2', 'fp3', 'fp4']
+vectypes = ['mol2vec']
 
 
 class fingerprint:
     
-    def __init__(self, bits: list, n: int):
+    def __init__(self, bits: list, values: list, n: int):
         self.bits = bits
+        self.values = values
         self.n = n
         
     def __str__(self):
@@ -42,8 +45,8 @@ class fingerprint:
         elif self.n > 10024:
             return None
         v = np.zeros(self.n, dtype=np.uint8)
-        for k in self.bits:
-            v[k] = 1
+        for i, k in enumerate(self.bits):
+            v[k] = self.values[i]
         return v
 
 
@@ -53,14 +56,21 @@ def get_fingerprint(smi, fp_type, nbit=None, depth=None):
     if depth is None:
         depth = 6
     if fp_type in cdktypes:
-        res, n = cdk_fingerprint(smi, fp_type, size = nbit, depth = depth)
+        bits, n = cdk_fingerprint(smi, fp_type, size = nbit, depth = depth)
+        values = [1] * len(bits)
     elif fp_type in rdktypes:
-        res, n = rdk_fingerprint(smi, fp_type, size = nbit)
+        bits, n = rdk_fingerprint(smi, fp_type, size = nbit)
+        values = [1] * len(bits)
     elif fp_type in babeltypes:
         if nbit is None:
             nbit = 307
-        res, n = ob_fingerprint(smi, fp_type)
+        bits, n = ob_fingerprint(smi, fp_type)
+        values = [1] * len(bits)
+    elif fp_type in vectypes:
+        n = 300
+        values = list(mol2vec_fingerprint(smi))
+        bits = list(np.arange(300))
     else:
         raise IOError('invalid fingerprint type')
-    return fingerprint(res, n)
+    return fingerprint(bits, values, n)
 

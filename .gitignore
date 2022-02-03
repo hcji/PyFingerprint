@@ -1,3 +1,10 @@
+# unfinished
+Example/
+
+# data
+*.csv
+*.sdf
+
 # PyCharm
 .idea/
 
