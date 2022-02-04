@@ -16,7 +16,7 @@ cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybr
             'klekota-roth', 'shortestpath', 'signature', 'substructure']
 rdktypes = ['rdkit', 'morgan', 'rdk-maccs', 'topological-torsion', 'avalon', 'atom-pair']
 babeltypes = ['fp2', 'fp3', 'fp4']
-vectypes = ['mol2vec']
+vectypes = ['mol2vec', 'heteroencoder']
 
 
 class fingerprint:
