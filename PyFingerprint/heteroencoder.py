@@ -2004,4 +2004,15 @@ class MorganDictVectorizer(object):
             for i, mol in enumerate(mols):
                 arr[i,:] = self.transform_mol(mol, misses=False)
             return arr
-            
+        
+
+'''
+Update for Pyfingerprint
+'''
+
+def hc_fingerprint(smi):
+    model_name = "PyFingerprint/Heteroencoder/heteroencoder_model"
+    model = DDC(model_name = model_name)
+    molb = Chem.rdchem.Mol.ToBinary(Chem.MolFromSmiles(smi))
+    vec = model.transform(model.vectorize([molb]))
+    return vec[0,0,:]
