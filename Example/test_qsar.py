@@ -39,7 +39,7 @@ class MLP:
         model.compile(optimizer=opt, loss='mse', metrics=['mae'])
         self.model = model
         
-    def train(self, epochs=8):
+    def train(self, epochs=10):
         self.model.fit(self.X_tr, self.Y_tr, epochs=epochs)
 
     def test(self):
@@ -73,28 +73,38 @@ data.columns = ['smiles', 'Ki', 'Kd', 'IC50']
 data.to_csv('Example/qsar_egfr.csv', index = False)
 '''
 
-fp_types = ['standard', 'extended', 'maccs', 'pubchem', 'maccs', 'klekota-roth', 'morgan', 'mol2vec', 'heteroencoder']
+fp_types = ['standard', 'extended', 'maccs', 'pubchem', 'klekota-roth', 'morgan', 'mol2vec']
 
 data = pd.read_csv('Example/qsar_egfr.csv')
 uni_smi = np.unique(data['smiles'])
-X, Y = [], []
-fp_type = 'standard'
-for smi in tqdm(uni_smi):
-    ys = data.loc[data['smiles'] == smi, 'Ki'].values
-    yi = np.nanmean(pd.to_numeric(ys, errors='coerce'))
-    yi = np.log10(yi)
-    if np.isnan(yi):
-        continue
-    else:
-        xi = get_fingerprint(smi, fp_type).to_numpy()
-    X.append(xi)
-    Y.append(yi)
-X = np.array(X)
-Y = np.array(Y)
 
-model = MLP(X, Y)
-model.train()
-score = model.test()
+evaluation = {}
+for fp_type in fp_types:
+    X, Y = [], []
+    for smi in tqdm(uni_smi):
+        ys = data.loc[data['smiles'] == smi, 'Ki'].values
+        yi = np.nanmean(pd.to_numeric(ys, errors='coerce'))
+        yi = np.log10(yi)
+        if np.isnan(yi):
+            continue
+        else:
+            xi = get_fingerprint(smi, fp_type).to_numpy()
+        X.append(xi)
+        Y.append(yi)
+    X = np.array(X)
+    Y = np.array(Y)
+    
+    scores = []
+    for i in range(20):
+        model = MLP(X, Y)
+        model.train()
+        score = model.test()
+        scores.append(score)
+    evaluation[fp_type] = scores
+    
 
-
-
+import json
+output = json.dumps(evaluation)
+f = open("dict.json","w")
+f.write(output)
+f.close()

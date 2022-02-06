@@ -44,7 +44,7 @@ class fingerprint:
             return None
         elif self.n > 10024:
             return None
-        v = np.zeros(self.n, dtype=np.uint8)
+        v = np.zeros(self.n)
         for i, k in enumerate(self.bits):
             v[k] = self.values[i]
         return v
