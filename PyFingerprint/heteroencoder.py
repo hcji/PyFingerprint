@@ -2010,9 +2010,19 @@ class MorganDictVectorizer(object):
 Update for Pyfingerprint
 '''
 
-def hc_fingerprint(smi):
+def hc_fingerprint(smi: str):
     model_name = "PyFingerprint/Heteroencoder/heteroencoder_model"
     model = DDC(model_name = model_name)
     molb = Chem.rdchem.Mol.ToBinary(Chem.MolFromSmiles(smi))
     vec = model.transform(model.vectorize([molb]))
     return vec[0,0,:]
+
+
+def hc_fingerprints(smlist: list):
+    model_name = "PyFingerprint/Heteroencoder/heteroencoder_model"
+    model = DDC(model_name = model_name)
+    molb = [Chem.rdchem.Mol.ToBinary(Chem.MolFromSmiles(smi)) for smi in smlist]
+    vecs = model.transform(model.vectorize(molb))
+    return vecs[:,0,:]
+
+

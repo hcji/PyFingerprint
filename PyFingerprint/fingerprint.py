@@ -10,8 +10,8 @@ import numpy as np
 from PyFingerprint.cdk import cdk_fingerprint
 from PyFingerprint.rdk import rdk_fingerprint 
 from PyFingerprint.babel import ob_fingerprint
-from PyFingerprint.mol2vec import mol2vec_fingerprint
-from PyFingerprint.heteroencoder import hc_fingerprint
+from PyFingerprint.mol2vec import mol2vec_fingerprint, mol2vec_fingerprints
+from PyFingerprint.heteroencoder import hc_fingerprint, hc_fingerprints
 
 cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybridization', 'lingo', 
             'klekota-roth', 'shortestpath', 'signature', 'substructure']
@@ -51,7 +51,7 @@ class fingerprint:
         return v
 
 
-def get_fingerprint(smi, fp_type, nbit=None, depth=None):
+def get_fingerprint(smi: str, fp_type: str, nbit=None, depth=None):
     if nbit is None:
         nbit = 1024
     if depth is None:
@@ -68,9 +68,9 @@ def get_fingerprint(smi, fp_type, nbit=None, depth=None):
         bits, n = ob_fingerprint(smi, fp_type)
         values = [1] * len(bits)
     elif fp_type == 'mol2vec':
-        n = 300
         values = list(mol2vec_fingerprint(smi))
-        bits = list(np.arange(300))
+        n = len(values)
+        bits = list(np.arange(n))
     elif fp_type == 'heteroencoder':
         values = list(hc_fingerprint(smi))
         n = len(values)
@@ -79,3 +79,18 @@ def get_fingerprint(smi, fp_type, nbit=None, depth=None):
         raise IOError('invalid fingerprint type')
     return fingerprint(bits, values, n)
 
+
+def get_fingerprints(smlist: list, fp_type: str, nbit=None, depth=None):
+    if fp_type not in vectypes:
+        output = [get_fingerprint(smi, fp_type, nbit, depth) for smi in smlist]
+    elif fp_type == 'mol2vec':
+        vecs = mol2vec_fingerprints(smlist)
+        n = vecs.shape[1]
+        bits = list(np.arange(n))
+        output = [fingerprint(bits, vecs[i,:], n) for i in range(vecs.shape[0])]
+    elif fp_type == 'heteroencoder':
+        vecs = hc_fingerprints(smlist)
+        n = vecs.shape[1]
+        bits = list(np.arange(n))
+        output = [fingerprint(bits, vecs[i,:], n) for i in range(vecs.shape[0])]        
+    return output

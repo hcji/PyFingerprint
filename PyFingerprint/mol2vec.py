@@ -511,9 +511,17 @@ def featurize(in_file, out_file, model_path, r, uncommon=None):
 Update for Pyfingerprint
 '''
 
-def mol2vec_fingerprint(smi):
+def mol2vec_fingerprint(smi: str):
     model = word2vec.Word2Vec.load('PyFingerprint/Mol2vec/model_300dim.pkl')
     mol = Chem.MolFromSmiles(smi)
     sen = MolSentence(mol2alt_sentence(mol, 1))
     vec = sentences2vec([sen], model, unseen='UNK')
     return vec[0,:]
+
+
+def mol2vec_fingerprints(smlist: list):
+    model = word2vec.Word2Vec.load('PyFingerprint/Mol2vec/model_300dim.pkl')
+    mols = [Chem.MolFromSmiles(smi) for smi in smlist]
+    sens = [MolSentence(mol2alt_sentence(mol, 1)) for mol in mols]
+    vecs = sentences2vec(sens, model, unseen='UNK')
+    return vecs

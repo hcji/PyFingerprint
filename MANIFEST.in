@@ -1,2 +1,3 @@
 include PyFingerprint/CDK/*
-include PyFingerprint/PyFingerprint/*
+include PyFingerprint/Mol2vec/*
+include PyFingerprint/Heteroencoder/*
