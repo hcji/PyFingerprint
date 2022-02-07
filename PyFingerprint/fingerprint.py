@@ -11,6 +11,7 @@ from PyFingerprint.cdk import cdk_fingerprint
 from PyFingerprint.rdk import rdk_fingerprint 
 from PyFingerprint.babel import ob_fingerprint
 from PyFingerprint.mol2vec import mol2vec_fingerprint
+from PyFingerprint.heteroencoder import hc_fingerprint
 
 cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybridization', 'lingo', 
             'klekota-roth', 'shortestpath', 'signature', 'substructure']
@@ -66,10 +67,14 @@ def get_fingerprint(smi, fp_type, nbit=None, depth=None):
             nbit = 307
         bits, n = ob_fingerprint(smi, fp_type)
         values = [1] * len(bits)
-    elif fp_type in vectypes:
+    elif fp_type == 'mol2vec':
         n = 300
         values = list(mol2vec_fingerprint(smi))
         bits = list(np.arange(300))
+    elif fp_type == 'heteroencoder':
+        values = list(hc_fingerprint(smi))
+        n = len(values)
+        bits = list(np.arange(n))
     else:
         raise IOError('invalid fingerprint type')
     return fingerprint(bits, values, n)
