@@ -9,34 +9,34 @@ There are many types of chemical fingerprint for describing the molecule provide
 
 ### Dependencies
 
- 1. [Anaconda for python 3.6 or later](https://www.anaconda.com/products/individual) 
+ 1. [Anaconda](https://www.anaconda.com/products/individual) 
  2. [Java SE Development Kit 11](https://www.oracle.com/java/technologies/java-se-development-kit11-downloads.html) 
- 3. jpype
+ 3. [molvecgen](https://github.com/EBjerrum/molvecgen)
  
-        pip install jpype1
-
- 4. RDKit
-
-        conda install -c rdkit rdkit
-		
- 5. OpenBabel
+        pip install git+https://github.com/EBjerrum/molvecgen	
+ 4. [OpenBabel](http://openbabel.org/wiki/Main_Page)
  
 		conda install -c conda-forge/label/main openbabel
  
 ### Install
 
-	pip install git+git://github.com/hcji/PyFingerprint@master
+- Clone the repo and navigate to it.
+- Create a predefined Python conda environment by `conda env create -f env/ddc_env.yml`. This ensures that you have the correct version of `rdKit` and `cudatoolkit`.
+- Run `pip install .` to install remaining dependencies and add the package to the Python path.
 
 ### Usage
+#### Fingerprints for single molecule
 
-    from PyFingerprint.fingerprint import get_fingerprint
+    import numpy as np
+    from PyFingerprint.fingerprint import get_fingerprint, get_fingerprints
 
-    smi = 'CCCCN'
     cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybridization', 'lingo', 
                 'klekota-roth', 'shortestpath', 'signature', 'substructure']
     rdktypes = ['rdkit', 'morgan', 'rdk-maccs', 'topological-torsion', 'avalon', 'atom-pair']
     babeltypes = ['fp2', 'fp3', 'fp4']
+    vectypes = ['mol2vec', 'heteroencoder']
 
+    smi = 'CCCCN'
     output = {}
     for f in cdktypes:
         output[f] = get_fingerprint(smi, f)
@@ -46,10 +46,34 @@ There are many types of chemical fingerprint for describing the molecule provide
         
     for f in babeltypes:
         output[f] = get_fingerprint(smi, f)
+        
+    for f in vectypes:
+        output[f] = get_fingerprint(smi, f)
 
     output_np = output.copy()
     for k, fp in output.items():
         output_np[k] = fp.to_numpy()
+        
+#### Fingerprints for multi molecules
+
+    smlist = ['CCCCC', 'CCCCN', 'CCCCO']    
+    output = {}
+    for f in cdktypes:
+        output[f] = get_fingerprints(smlist, f)
+
+    for f in rdktypes:
+        output[f] = get_fingerprints(smlist, f)
+        
+    for f in babeltypes:
+        output[f] = get_fingerprints(smlist, f)
+        
+    for f in vectypes:
+        output[f] = get_fingerprints(smlist, f)
+
+    output_np = output.copy()
+    for k, fps in output.items():
+        output_np[k] = np.array([fp.to_numpy() for fp in fps])
+
 	
 ### Cite
 
@@ -77,5 +101,6 @@ There are many types of chemical fingerprint for describing the molecule provide
 	**fp2**: OpenBabel FP2 fingerprint, which indexes small molecule fragments based on linear segments of up to 7 atoms in length.
 	**fp3**: OpenBabel FP3 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
 	**fp4**: OpenBabel FP4 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
-	
+	**mol2vec**: Unsupervised machine learning approach for mulecule representation.  
+	**heteroencoder**: Molecular descriptor generated from the hetero-encoder.
 
