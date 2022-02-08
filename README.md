@@ -77,7 +77,23 @@ There are many types of chemical fingerprint for describing the molecule provide
 	
 ### Cite
 
-[Predicting Molecular Fingerprint from Electron-Ionization Mass Spectrum with Deep Neural Networks](https://pubs.acs.org/doi/10.1021/acs.analchem.0c01450)
+
+```bibtex
+@article{doi:10.1021/acs.analchem.0c01450,
+author = {Ji, Hongchao and Deng, Hanzi and Lu, Hongmei and Zhang, Zhimin},
+title = {Predicting a Molecular Fingerprint from an Electron Ionization Mass Spectrum with Deep Neural Networks},
+journal = {Analytical Chemistry},
+volume = {92},
+number = {13},
+pages = {8649-8653},
+year = {2020},
+doi = {10.1021/acs.analchem.0c01450},
+    note ={PMID: 32584545},
+URL = { 
+        https://doi.org/10.1021/acs.analchem.0c01450
+    
+}}
+```
 
 ### Support fingerprint types:
 
