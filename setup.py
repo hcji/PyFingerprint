@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='PyFingerprint',
-      version='0.1.1',
+      version='2.0',
       description='Python tool for generate fingerprints of a molecule',
       license='AGPLv3',
       author='Ji Hongchao',
