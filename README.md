@@ -19,10 +19,15 @@ There are many types of chemical fingerprint for describing the molecule provide
 		conda install -c conda-forge/label/main openbabel
  
 ### Install
-
+#### Full installation
 - Clone the repo and navigate to it.
 - Create a predefined Python conda environment by `conda env create -f env/ddc_env.yml`. This ensures that you have the correct version of `rdKit` and `cudatoolkit`.
 - Run `pip install .` to install remaining dependencies and add the package to the Python path.
+
+#### Simple installation
+- If you do not use heteroencoder
+    
+    pip install git+https://github.com/hcji/PyFingerprint.git
 
 ### Usage
 #### Fingerprints for single molecule
