@@ -11,7 +11,12 @@ from PyFingerprint.cdk import cdk_fingerprint
 from PyFingerprint.rdk import rdk_fingerprint 
 from PyFingerprint.babel import ob_fingerprint
 from PyFingerprint.mol2vec import mol2vec_fingerprint, mol2vec_fingerprints
-from PyFingerprint.heteroencoder import hc_fingerprint, hc_fingerprints
+try:
+    from PyFingerprint.heteroencoder import hc_fingerprint, hc_fingerprints
+    hc_enable = True
+except:
+    hc_enable = False
+    
 
 cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybridization', 'lingo', 
             'klekota-roth', 'shortestpath', 'signature', 'substructure']
@@ -72,6 +77,8 @@ def get_fingerprint(smi: str, fp_type: str, nbit=None, depth=None):
         n = len(values)
         bits = list(np.arange(n))
     elif fp_type == 'heteroencoder':
+        if not hc_enable:
+            raise IOError('heteroencoder is not enabled')
         values = list(hc_fingerprint(smi))
         n = len(values)
         bits = list(np.arange(n))
@@ -89,6 +96,8 @@ def get_fingerprints(smlist: list, fp_type: str, nbit=None, depth=None):
         bits = list(np.arange(n))
         output = [fingerprint(bits, vecs[i,:], n) for i in range(vecs.shape[0])]
     elif fp_type == 'heteroencoder':
+        if not hc_enable:
+            raise IOError('heteroencoder is not enabled')
         vecs = hc_fingerprints(smlist)
         n = vecs.shape[1]
         bits = list(np.arange(n))
