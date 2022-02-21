@@ -25,7 +25,7 @@ There are many types of chemical fingerprint for describing the molecule provide
 - Run `pip install .` to install remaining dependencies and add the package to the Python path.
 
 #### Simple installation
-- If you do not use heteroencoder
+If you do not use heteroencoder
     
     pip install git+https://github.com/hcji/PyFingerprint.git
 
