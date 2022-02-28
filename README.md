@@ -125,3 +125,5 @@ URL = {
 	**mol2vec**: Unsupervised machine learning approach for mulecule representation.  
 	**heteroencoder**: Molecular descriptor generated from the hetero-encoder.
 
+WeChat public account: Chemocoder    
+<img align="center" src="https://github.com/hcji/hcji/blob/main/img/qrcode.jpg" width="20%"/>
