@@ -8,6 +8,9 @@ Author: Samo Turk
 
 """
 
+import os
+import PyFingerprint
+
 from tqdm import tqdm
 import numpy as np
 import pandas as pd
@@ -512,7 +515,8 @@ Update for Pyfingerprint
 '''
 
 def mol2vec_fingerprint(smi: str):
-    model = word2vec.Word2Vec.load('PyFingerprint/Mol2vec/model_300dim.pkl')
+    model_path = os.path.join(PyFingerprint.__path__[0], 'Mol2vec', 'model_300dim.pkl')
+    model = word2vec.Word2Vec.load(model_path)
     mol = Chem.MolFromSmiles(smi)
     sen = MolSentence(mol2alt_sentence(mol, 1))
     vec = sentences2vec([sen], model, unseen='UNK')
@@ -520,7 +524,8 @@ def mol2vec_fingerprint(smi: str):
 
 
 def mol2vec_fingerprints(smlist: list):
-    model = word2vec.Word2Vec.load('PyFingerprint/Mol2vec/model_300dim.pkl')
+    model_path = os.path.join(PyFingerprint.__path__[0], 'Mol2vec', 'model_300dim.pkl')
+    model = word2vec.Word2Vec.load(model_path)
     mols = [Chem.MolFromSmiles(smi) for smi in smlist]
     sens = [MolSentence(mol2alt_sentence(mol, 1)) for mol in mols]
     vecs = sentences2vec(sens, model, unseen='UNK')

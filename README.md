@@ -78,10 +78,8 @@ If you do not use heteroencoder
     output_np = output.copy()
     for k, fps in output.items():
         output_np[k] = np.array([fp.to_numpy() for fp in fps])
-
 	
 ### Cite
-
 
 ```bibtex
 @article{doi:10.1021/acs.analchem.0c01450,
