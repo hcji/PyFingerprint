@@ -4,6 +4,7 @@
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/hcji/PyFingerprint?include_prereleases)
 ![GitHub repo size](https://img.shields.io/github/repo-size/hcji/PyFingerprint)
 
+![Alt](https://repobeats.axiom.co/api/embed/f249efac1950e934a8a88addc0cc562f319977f2.svg "Repobeats analytics image")
 
 There are many types of chemical fingerprint for describing the molecule provided by different tools, such as RDKit, CDK and OpenBabel. This package aims to summarize them all.
 
