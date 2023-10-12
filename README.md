@@ -27,7 +27,9 @@ There are many types of chemical fingerprint for describing the molecule provide
 
 #### Simple installation
 If you do not use heteroencoder
-    make sure you have the dependencies installed (openbabel, java, ...)
+    First make sure you have the dependencies installed (openbabel, java, ...)
+    Followed by:
+    
     pip install git+https://github.com/hcji/PyFingerprint.git
 
 ### Usage
