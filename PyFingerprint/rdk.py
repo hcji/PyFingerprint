@@ -3,6 +3,10 @@
 Created on Wed Nov 14 15:39:39 2018
 
 @author: hcji
+
+Updated on Thu Oct 12 20:04:22 2023
+
+@author: Jnelen
 """
 
 from rdkit.Chem import MACCSkeys
@@ -11,28 +15,66 @@ from rdkit.Chem.AllChem import GetMorganFingerprintAsBitVect
 from rdkit.Chem.AtomPairs import Pairs
 from rdkit.Chem.AtomPairs import Torsions
 from rdkit.Avalon import pyAvalonTools
+from rdkit.Chem import Descriptors
 
-def rdk_fingerprint(smi, fp_type="rdkit", size=1024):
-    _fingerprinters = {"rdkit": Chem.rdmolops.RDKFingerprint
-                           , "rdk-maccs": MACCSkeys.GenMACCSKeys
-                           , "topological-torsion": Torsions.GetTopologicalTorsionFingerprint
-                           , "avalon": pyAvalonTools.GetAvalonFP}
+def calcDescriptors(mol):
+   fp = []
+   for nm,fn in Descriptors.descList:
+       try:
+           fp.append(fn(mol))
+       except:
+           fp.append(None)
+   return fp
+    
+def rdk_fingerprint(smi, fp_type="rdkit", depth=None, size=None):
+
     mol = Chem.MolFromSmiles(smi)
-    if fp_type in _fingerprinters:
-        fingerprinter = _fingerprinters[fp_type]
-        fp = fingerprinter(mol)
-    elif fp_type == "atom-pair":
-        fp = Pairs.GetAtomPairFingerprintAsBitVect(mol)
-    elif fp_type == "morgan":
-        fp = GetMorganFingerprintAsBitVect(mol, 2, nBits=size)
-    else:
-        raise IOError('invalid fingerprint type')
-    try:
-        size = fp.GetNumBits()
-        temp = fp.GetOnBits()
-    except:
-        size = None
-        temp = list(fp.GetNonzeroElements().keys())
-    res = [i for i in temp]
+    mol = Chem.AddHs(mol)
 
-    return res, size
+    if not depth == None:
+	    if fp_type == "avalon":	    
+	        size = 512 if size == None else size
+	        fp = pyAvalonTools.GetAvalonFP(mol, nBits=size)
+	    elif fp_type == "atom-pair":
+	        size = 2048 if size == None else size
+	        fp = Pairs.GetHashedAtomPairFingerprint(mol, maxLength=depth, nBits=size)
+	    elif fp_type == "morgan":
+	        size = 2048 if size == None else size
+	        fp = GetMorganFingerprintAsBitVect(mol, radius=depth, nBits=size)
+	    elif fp_type == "rdkit":
+	        size = 2048 if size == None else size
+	        fp = Chem.rdmolops.RDKFingerprint(mol, maxPath=depth, fpSize=size)
+	    elif fp_type == "rdk-maccs":
+	        fp = MACCSkeys.GenMACCSKeys(mol)  
+	    elif fp_type == "topological-torsion":
+	        size = 2048 if size == None else size
+	        fp = Torsions.GetHashedTopologicalTorsionFingerprint(mol, nBits=size, targetSize=size)
+	    elif fp_type == "rdk-descriptor":
+	        fp = calcDescriptors(mol)          
+	    else:
+	        raise IOError('invalid fingerprint type')
+	        
+    else:
+	    if fp_type == "avalon":	    
+	        size = 512 if size == None else size
+	        fp = pyAvalonTools.GetAvalonFP(mol, nBits=size)
+	    elif fp_type == "atom-pair":
+	        size = 2048 if size == None else size
+	        fp = Pairs.GetHashedAtomPairFingerprint(mol, nBits=size)
+	    elif fp_type == "morgan":
+	        size = 2048 if size == None else size
+	        fp = GetMorganFingerprintAsBitVect(mol, radius=3, nBits=size)
+	    elif fp_type == "rdkit":
+	        size = 2048 if size == None else size
+	        fp = Chem.rdmolops.RDKFingerprint(mol, fpSize=size)
+	    elif fp_type == "rdk-maccs":
+	        fp = MACCSkeys.GenMACCSKeys(mol)  
+	    elif fp_type == "topological-torsion":
+	        size = 2048 if size == None else size
+	        fp = Torsions.GetHashedTopologicalTorsionFingerprint(mol, nBits=size)
+	    elif fp_type == "rdk-descriptor":
+	        fp = calcDescriptors(mol)
+	    else:
+	        raise IOError('invalid fingerprint type')
+
+    return fp
