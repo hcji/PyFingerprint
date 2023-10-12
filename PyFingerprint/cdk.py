@@ -35,7 +35,7 @@ def get_fingerprinter(name, size, depth):
     ## Checking if the depth is specified. If not, we use the default CDK values where appropriate 
     if depth == None:
 	    _fingerprinters = {"standard":lambda : cdk.fingerprint.Fingerprinter(size, 7)
-	                       , "atompairs": lambda : cdk.fingerprint.AtomPairs2DFingerprinter()
+	                       , "cdk-atompairs": lambda : cdk.fingerprint.AtomPairs2DFingerprinter()
 	                       , "extended":lambda : cdk.fingerprint.ExtendedFingerprinter(size, 7)
 	                       , "graph":lambda : cdk.fingerprint.GraphOnlyFingerprinter(size, 7)
 	                       , "maccs":lambda : cdk.fingerprint.MACCSFingerprinter()
@@ -53,7 +53,7 @@ def get_fingerprinter(name, size, depth):
     ## Use the user-specified settings for the fingerprint generation
     else:
         _fingerprinters = {"standard":lambda : cdk.fingerprint.Fingerprinter(size, depth)
-	                       , "atompairs": lambda : cdk.fingerprint.AtomPairs2DFingerprinter()
+	                       , "cdk-atompairs": lambda : cdk.fingerprint.AtomPairs2DFingerprinter()
 	                       , "extended":lambda : cdk.fingerprint.ExtendedFingerprinter(size, depth)
 	                       , "graph":lambda : cdk.fingerprint.GraphOnlyFingerprinter(size, depth)
 	                       , "maccs":lambda : cdk.fingerprint.MACCSFingerprinter()
@@ -86,7 +86,7 @@ def cdk_fingerprint(smi, fp_type="standard", size=1024, depth=None):
         nbit = 166
     elif fp_type == 'cdk-substructure':
         nbit = 307
-    elif fp_type == 'atompairs':
+    elif fp_type == 'cdk-atompairs':
         nbit = 780
     elif fp_type == 'pubchem':
         nbit = 881
