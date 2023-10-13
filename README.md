@@ -27,6 +27,8 @@ There are many types of chemical fingerprint for describing the molecule provide
 
 #### Simple installation
 If you do not use heteroencoder
+    First make sure you have the dependencies installed (openbabel, java, ...)
+    Followed by:
     
     pip install git+https://github.com/hcji/PyFingerprint.git
 
@@ -37,9 +39,9 @@ If you do not use heteroencoder
     from PyFingerprint.fingerprint import get_fingerprint, get_fingerprints
 
     cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybridization', 'lingo', 
-                'klekota-roth', 'shortestpath', 'signature', 'substructure']
-    rdktypes = ['rdkit', 'morgan', 'rdk-maccs', 'topological-torsion', 'avalon', 'atom-pair']
-    babeltypes = ['fp2', 'fp3', 'fp4']
+                'klekota-roth', 'shortestpath', 'cdk-substructure', 'circular', 'cdk-atompairs']
+    rdktypes = ['rdkit', 'morgan', 'rdk-maccs', 'topological-torsion', 'avalon', 'atom-pair', 'rdk-descriptor']
+    babeltypes = ['fp2', 'fp3', 'fp4', 'spectrophore']
     vectypes = ['mol2vec', 'heteroencoder']
 
     smi = 'CCCCN'
@@ -106,10 +108,12 @@ URL = {
 	**graph**: Similar to the standard type by simply considers connectivity.
 	**hybridization**: Similar to the standard type, but only consider hybridization state.
 	**estate**: 79 bit fingerprints corresponding to the E-State atom types described by Hall and Kier.
+        **cdk-atompairs**: CDK's implementation of the atompairs fingerprint
+        **cdk-substructure**: CDK substructure fingerprint, basically identical to openbabel's fp4.
 	**pubchem**: 881 bit fingerprints defined by PubChem.
 	**klekota-roth**: 4860 bit fingerprint defined by Klekota and Roth.
 	**shortestpath**: A fingerprint based on the shortest paths between pairs of atoms and takes into account ring systems, charges etc.
-	**signature**: A feature,count type of fingerprint, similar in nature to circular fingerprints, but based on the signature descriptor.
+        **rdk-descriptor**: Various molecular descriptors implemented and calculated by RDKit.
 	**circular**: An implementation of the ECFP6 fingerprint.
 	**lingo**: An implementation of the LINGO fingerprint.
 	**rdkit**: Another implementation of a Daylight-like fingerprint by RDKit.
@@ -121,6 +125,7 @@ URL = {
 	**fp2**: OpenBabel FP2 fingerprint, which indexes small molecule fragments based on linear segments of up to 7 atoms in length.
 	**fp3**: OpenBabel FP3 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
 	**fp4**: OpenBabel FP4 fingerprint, which is a fingerprint method created from a set of SMARTS patterns defining functional groups.
+        **spectrophore** Openbabel implementation of the spectrophore fingerprint (https://github.com/silicos-it/spectrophore).
 	**mol2vec**: Unsupervised machine learning approach for mulecule representation.  
 	**heteroencoder**: Molecular descriptor generated from the hetero-encoder.
 
