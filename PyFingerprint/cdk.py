@@ -91,21 +91,9 @@ def cdk_fingerprint(smi, fp_type="standard", size=1024, depth=None):
     elif fp_type == 'pubchem':
         nbit = 881
     elif fp_type == 'klekota-roth':
-        nbit = 4860      
-    elif fp_type == 'signature':
-        nbit = None
-        print("Signature_FP")
-        fingerprinter = cdk.fingerprint.SignatureFingerprinter()
-        mol = cdk_parser_smiles(smi)
-        print(fingerprinter.getSize())
-        print(fingerprinter.getBitFingerprint(mol).getSetbits())
-        print(fingerprinter.getBitFingerprint(mol).size())
-        print(fingerprinter.getRawFingerprint(mol))
-        
+        nbit = 4860
     else:
         nbit = size
-
-    
 
     # Pull from cache if it exists
     if (fp_type, size, depth) in fp_map: 
@@ -116,4 +104,6 @@ def cdk_fingerprint(smi, fp_type="standard", size=1024, depth=None):
     
     fp_obj = fingerprinter.getBitFingerprint(mol)
     bits = list(fp_obj.getSetbits())
+    if fp_type == "signature":
+        bits = list(set((bit%nbit) for bit in bits))
     return bits, nbit
