@@ -9,10 +9,9 @@ setup(name='PyFingerprint',
       url='https://github.com/hcji/PyFingerprint',
 	  include_package_data = True,
       packages=find_packages(),
-    install_requires=[
-  "jpype1",
-  "gensim",
-  "scikit-learn",
-  "tqdm"
-    ],
-     )
+      install_requires=[
+          "jpype1",
+          "gensim",
+          "scikit-learn",
+          "tqdm",
+          "rdkit-pypi"])
