@@ -6,6 +6,5 @@ channels:
   - defaults
 dependencies:
   - h5py=2.10.0
-  - rdkit
   - faiss
   - openbabel
