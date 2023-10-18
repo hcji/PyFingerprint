@@ -12,14 +12,14 @@ There are many types of chemical fingerprint for describing the molecule provide
 
  1. [Anaconda](https://www.anaconda.com/products/individual) 
  2. [Java SE Development Kit 11](https://www.oracle.com/java/technologies/java-se-development-kit11-downloads.html) 
- 3. [OpenBabel](http://openbabel.org/wiki/Main_Page)
- 
-		conda install -c conda-forge/label/main openbabel
  
 ### Install
-    First make sure you have the dependencies installed (openbabel, java, ...)
-    Followed by:
+
+- Clone the repo and navigate to it.
+- Create a predefined Python conda environment by `conda env create -f env/pyfingerprint_env.yml`.
+- Activate conda environment and install with pip.
     
+    conda activate pyfingerprint
     pip install git+https://github.com/hcji/PyFingerprint.git
 
 ### Usage
