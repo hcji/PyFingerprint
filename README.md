@@ -19,8 +19,8 @@ There are many types of chemical fingerprint for describing the molecule provide
 - Create a predefined Python conda environment by `conda env create -f env/pyfingerprint_env.yml`.
 - Activate conda environment and install with pip.
     
-	conda activate pyfingerprint
-	pip install git+https://github.com/hcji/PyFingerprint.git
+        conda activate pyfingerprint
+        pip install git+https://github.com/hcji/PyFingerprint.git
 
 ### Usage
 #### Fingerprints for single molecule
