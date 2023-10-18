@@ -11,6 +11,7 @@ setup(name='PyFingerprint',
       packages=find_packages(),
       install_requires=[
           "jpype1",
+          "pandas",
           "gensim",
           "scikit-learn",
           "tqdm",
