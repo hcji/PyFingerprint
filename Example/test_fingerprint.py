@@ -8,7 +8,7 @@ Created on Wed Feb  2 09:51:17 2022
 import numpy as np
 from PyFingerprint.fingerprint import get_fingerprint, get_fingerprints
 
-cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybridization', 'lingo', 'klekota-roth', 'shortestpath', 'cdk-substructure', 'circular', 'atompairs', 'signature']
+cdktypes = ['standard', 'extended', 'graph', 'maccs', 'pubchem', 'estate', 'hybridization', 'lingo', 'klekota-roth', 'shortestpath', 'cdk-substructure', 'circular', 'cdk-atompairs', 'signature']
 rdktypes = ['rdkit', 'morgan', 'rdk-maccs', 'topological-torsion', 'avalon', 'atom-pair', 'rdk-descriptor']
 babeltypes = ['fp2', 'fp3', 'fp4', 'spectrophore']
 vectypes = ['mol2vec']
