@@ -29,7 +29,7 @@ def calcDescriptors(mol):
 def rdk_fingerprint(smi, fp_type="rdkit", depth=None, size=None):
 
     mol = Chem.MolFromSmiles(smi)
-    mol = Chem.AddHs(mol)
+    mol = Chem.RemoveHs(mol)
 
     if not depth == None:
 	    if fp_type == "avalon":	    
