@@ -15,4 +15,4 @@ setup(name='PyFingerprint',
           "gensim",
           "scikit-learn",
           "tqdm",
-          "rdkit-pypi"])
+          "rdkit"])
