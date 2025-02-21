@@ -73,7 +73,7 @@ def get_fingerprint(smi: str, fp_type: str, nbit=None, depth=None):
         for i, k in enumerate(bits):
             fp[k] = 1
     elif fp_type in rdktypes:
-        fp = list(rdk_fingerprint(smi, fp_type, size=nbit))
+        fp = list(rdk_fingerprint(smi, fp_type, size=nbit, depth=depth))
 
     elif fp_type in babeltypes:
         fp = ob_fingerprint(smi, fp_type)
